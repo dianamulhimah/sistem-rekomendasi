@@ -59,7 +59,7 @@ Dataset ini terdiri dari 3 file utama, yaitu:
 | Ratings | 1,149,780    | 3            |
 
 **Deskripsi Variabel**
-**Books.csv**
+<br/>**Books.csv**
 Berisi metadata dari setiap buku:
 * `ISBN`: Nomor unik untuk identifikasi buku.
 * `Book-Title`: Judul buku.
