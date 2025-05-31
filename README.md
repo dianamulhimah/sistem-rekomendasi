@@ -8,11 +8,6 @@ Salah satu pendekatan utama yang digunakan dalam sistem rekomendasi adalah Colla
 Di sisi lain, pendekatan Content-Based Filtering (CBF) juga banyak digunakan, terutama dalam konteks perpustakaan. CBF bekerja dengan menganalisis atribut atau fitur dari item seperti judul, pengarang, dan genre untuk merekomendasikan item serupa. Penelitian oleh [^2] dan [^3] menunjukkan bahwa pendekatan ini dapat menghasilkan rekomendasi yang akurat berdasarkan deskripsi konten meskipun tanpa melibatkan data dari pengguna lain.
 Proyek ini bertujuan untuk mengembangkan sistem rekomendasi buku dengan mengombinasikan pendekatan Collaborative Filtering dan Content-Based Filtering, berdasarkan efektivitas yang telah dibuktikan oleh beberapa studi sebelumnya. Dengan adanya sistem rekomendasi ini, diharapkan pengguna dapat memperoleh saran buku yang lebih personal dan relevan dengan preferensi mereka, serta mendukung digitalisasi layanan literasi yang efisien dan adaptif terhadap kebutuhan pengguna.
 
-## Refensi
-[^1]:	R. Akbar, D. Richasdy, and R. Dharayani, “Sistem Rekomendasi Buku Dengan Collaborative Filtering Menggunakan Metode Singular Value Decomposition ( SVD ),” e-Proceedings of Engineering, vol. 10, no. 5, 2023.
-[^2]:	M. Alkaff, H. Khatimi, and A. Eriadi, “Sistem Rekomendasi Buku pada Perpustakaan Daerah Provinsi Kalimantan Selatan Menggunakan Metode Content-Based Filtering,” MATRIK : Jurnal Manajemen, Teknik Informatika dan Rekayasa Komputer, vol. 20, no. 1, 2020, doi: 10.30812/matrik.v20i1.617.
-[^3]:	R. Ardiansyah, M. Ari Bianto, and B. D. Saputra, “Sistem Rekomendasi Buku Perpustakaan Sekolah menggunakan Metode Content-Based Filtering,” Jurnal CoSciTech (Computer Science and Information Technology), vol. 4, no. 2, 2023, doi: 10.37859/coscitech.v4i2.5131.
-
 ## Business Understanding
 Pada tahap ini, dilakukan proses klarifikasi terhadap permasalahan yang dihadapi pengguna dalam menemukan buku yang relevan dengan preferensi mereka. Banyak pengguna kesulitan menemukan buku serupa setelah menyukai suatu buku karena keterbatasan informasi atau banyaknya pilihan yang tersedia. Selain itu, pengguna juga sering melewatkan buku-buku potensial yang belum pernah mereka baca karena tidak muncul dalam pencarian atau rekomendasi.
 
@@ -82,7 +77,13 @@ Berisi informasi rating yang diberikan oleh pengguna terhadap buku:
 * `ISBN`: ISBN buku yang dinilai.
 * `Book-Rating`: Rating yang diberikan, dalam skala 0–10
 
+**Exploratory Data Analysis**
 
+Banyak pengguna berusia antara 20 hingga 40 tahun.
+
+Banyak buku yang diterbitkan antara 1990 hingga awal 2000-an.
+
+Rating **0** mendominasi, artinya pengguna mungkin hanya memberi interaksi tanpa memberikan penilaian. Rating lainnya cenderung antara **6–10**, mengindikasikan lebih banyak feedback positif.
 
 
 
@@ -122,3 +123,10 @@ Rubrik/Kriteria Tambahan (Opsional):
 Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
 ---Ini adalah bagian akhir laporan---
 
+
+
+
+## Referensi
+[^1]:	R. Akbar, D. Richasdy, and R. Dharayani, “Sistem Rekomendasi Buku Dengan Collaborative Filtering Menggunakan Metode Singular Value Decomposition ( SVD ),” e-Proceedings of Engineering, vol. 10, no. 5, 2023.
+[^2]:	M. Alkaff, H. Khatimi, and A. Eriadi, “Sistem Rekomendasi Buku pada Perpustakaan Daerah Provinsi Kalimantan Selatan Menggunakan Metode Content-Based Filtering,” MATRIK : Jurnal Manajemen, Teknik Informatika dan Rekayasa Komputer, vol. 20, no. 1, 2020, doi: 10.30812/matrik.v20i1.617.
+[^3]:	R. Ardiansyah, M. Ari Bianto, and B. D. Saputra, “Sistem Rekomendasi Buku Perpustakaan Sekolah menggunakan Metode Content-Based Filtering,” Jurnal CoSciTech (Computer Science and Information Technology), vol. 4, no. 2, 2023, doi: 10.37859/coscitech.v4i2.5131.
