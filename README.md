@@ -79,6 +79,7 @@ Berisi informasi rating yang diberikan oleh pengguna terhadap buku:
 
 **Exploratory Data Analysis**
 * Distribusi Usia Pengguna
+1[distribusi](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-rating-pengguna.png?raw=true)
 ![distribusi-usia-pengguna](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/main/assets/distribusi-usia-pengguna.png)
 Banyak pengguna berusia antara 20 hingga 40 tahun.
 
