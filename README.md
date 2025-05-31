@@ -89,8 +89,7 @@ Banyak pengguna berusia antara 20 hingga 40 tahun.
 Banyak buku yang diterbitkan antara 1990 hingga awal 2000-an.
 
 * Distribusi Rating Pengguna
-![distribusi-rating-pengguna](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/main/assets/distribusi-rating-pengguna.png)
-![Distribusi Usia Pengguna](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/main/assets/distribusi-usia-pengguna.png)
+![distribusi-rating-pengguna](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-usia-pengguna.png?raw=true)
 Rating **0** mendominasi, artinya pengguna mungkin hanya memberi interaksi tanpa memberikan penilaian. Rating lainnya cenderung antara **6–10**, mengindikasikan lebih banyak feedback positif.
 
 
