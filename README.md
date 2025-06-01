@@ -84,6 +84,7 @@ Banyak pengguna berusia antara 20 hingga 50 tahun.
 
 * Distribusi Tahun Publikasi Buku
 ![distribusi-tahun-publikasi-buku](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/main/assets/ddistribusi-tahun-publikasi-buku.png)
+![distribusi-tahun-publikasi-buku](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-tahun-publikasi-buku.png?raw=true)
 Banyak buku yang diterbitkan antara 1990 hingga awal 2000-an.
 
 * Distribusi Rating Pengguna
