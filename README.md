@@ -193,14 +193,14 @@ Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
 ## Modeling
 Sistem rekomendasi ini dibuat untuk membantu pengguna menemukan buku-buku yang sesuai dengan minat dan preferensi mereka berdasarkan data yang tersedia, seperti judul buku, penulis, dan interaksi pengguna terhadap buku tersebut.
 1. **Content-Based Filtering (TF-IDF + Cosine Similarity)**
-Content-Based Filtering merekomendasikan item berdasarkan kemiripan fitur antar item yang sebelumnya disukai oleh pengguna. 
-**Proses Modeling**
+<br/>Content-Based Filtering merekomendasikan item berdasarkan kemiripan fitur antar item yang sebelumnya disukai oleh pengguna. 
+<br/>**Proses Modeling**
 * Menggunakan TF-IDF Vectorizer untuk mengekstrak fitur teks dari kolom `book_title`.
 * Membentuk matriks fitur TF-IDF untuk tiap judul buku.
 * Menghitung cosine similarity antar buku berdasarkan fitur tersebut.
 * Memberikan rekomendasi buku yang mirip dengan buku atau penulis yang dipilih pengguna.
-**Top-N Recommendation**
-Misalnya untuk pengguna yang menyukai penulis *Thomas Robbins*, rekomendasi buku teratas yang mirip diberikan sebagai berikut:
+<br/>**Top-N Recommendation**
+<br/>Misalnya untuk pengguna yang menyukai penulis *Thomas Robbins*, rekomendasi buku teratas yang mirip diberikan sebagai berikut:
 
 | book_author     | book_title       |
 |-----------------|------------------|
@@ -211,17 +211,16 @@ Misalnya untuk pengguna yang menyukai penulis *Thomas Robbins*, rekomendasi buku
 | Elmore Leonard  | Cuba Libre       |
 
 2. **Collaborative Filtering RecommenderNet (Neural Network Embedding)**
-Collaborative Filtering didasarkan pada interaksi pengguna terhadap item. Sistem merekomendasikan buku yang disukai oleh pengguna lain yang memiliki preferensi serupa.
-**Proses Modeling**
+<br/>Collaborative Filtering didasarkan pada interaksi pengguna terhadap item. Sistem merekomendasikan buku yang disukai oleh pengguna lain yang memiliki preferensi serupa.
+<br/>**Proses Modeling**
 * Membuat model embedding untuk user dan buku dengan ukuran embedding 50.
 * Model mempelajari pola interaksi user-buku berdasarkan data rating atau feedback biner.
 * Model dilatih menggunakan optimizer Adam, loss BinaryCrossentropy, dan metrik RootMeanSquaredError (RMSE).
 * Setelah training selesai, model memprediksi skor kecocokan buku yang belum dikunjungi user.
-**Contoh Output Top-N Recommendation**
-Rekomendasi buku teratas untuk user tertentu berdasarkan prediksi model:
-Recommendations for User: 98484
-Books with High Ratings from User
-
+<br/>**Contoh Output Top-N Recommendation**
+<br/>Rekomendasi buku teratas untuk user tertentu berdasarkan prediksi model:
+<br/>Recommendations for User: 98484
+<br/>Books with High Ratings from User
 
 | Penulis           | Judul Buku                                                     |
 |-------------------|----------------------------------------------------------------|
