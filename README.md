@@ -79,19 +79,14 @@ Berisi informasi rating yang diberikan oleh pengguna terhadap buku:
 
 **Exploratory Data Analysis**
 * Distribusi Usia Pengguna
-![distribusi-usia-pengguna](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/main/assets/distribusi-usia-pengguna.png)
-![distribusi-usia-pengguna](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-usia-pengguna.png)
-![Distribusi Usia Pengguna](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/main/assets/distribusi-usia-pengguna.png)
 ![Distribusi Usia Pengguna](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-usia-pengguna.png?raw=true)
 Banyak pengguna berusia antara 20 hingga 50 tahun.
 
 * Distribusi Tahun Publikasi Buku
-![distribusi-tahun-publikasi-buku](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-tahun-publikasi-buku.png)
 ![distribusi-tahun-publikasi-buku](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-tahun-publikasi-buku.png?raw=true)
 Banyak buku yang diterbitkan antara 1990 hingga awal 2000-an.
 
 * Distribusi Rating Pengguna
-![distribusi-rating-pengguna](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-usia-pengguna.png)
 ![distribusi-rating-pengguna](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-usia-pengguna.png?raw=true)
 <br/>Rating **0** mendominasi, artinya pengguna mungkin hanya memberi interaksi tanpa memberikan penilaian. Rating lainnya cenderung antara **6–10**, mengindikasikan lebih banyak feedback positif.
 
@@ -293,7 +288,6 @@ $$
 * RMSE memiliki satuan yang sama dengan nilai target sehingga interpretasinya lebih mudah.
   
 **Grafik berikut menunjukkan perkembangan nilai RMSE selama proses pelatihan model pada tiap epoch:**
-![epoch](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/epoch.png?)
 ![distribusi-tahun-publikasi-buku](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/epoch.png?raw=true)
 * Pada awal pelatihan, RMSE pada data training dan testing relatif tinggi.
 * Seiring bertambahnya epoch, RMSE pada data training menurun secara signifikan, menandakan model semakin baik dalam memprediksi data pelatihan.
