@@ -191,12 +191,77 @@ Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
 
 
 ## Modeling
-Tahapan ini membahas mengenai model sisten rekomendasi yang Anda buat untuk menyelesaikan permasalahan. Sajikan top-N recommendation sebagai output.
+Sistem rekomendasi ini dibuat untuk membantu pengguna menemukan buku-buku yang sesuai dengan minat dan preferensi mereka berdasarkan data yang tersedia, seperti judul buku, penulis, dan interaksi pengguna terhadap buku tersebut.
+1. **Content-Based Filtering (TF-IDF + Cosine Similarity)**
+Content-Based Filtering merekomendasikan item berdasarkan kemiripan fitur antar item yang sebelumnya disukai oleh pengguna. 
+**Proses Modeling**
+* Menggunakan TF-IDF Vectorizer untuk mengekstrak fitur teks dari kolom `book_title`.
+* Membentuk matriks fitur TF-IDF untuk tiap judul buku.
+* Menghitung cosine similarity antar buku berdasarkan fitur tersebut.
+* Memberikan rekomendasi buku yang mirip dengan buku atau penulis yang dipilih pengguna.
+**Top-N Recommendation**
+Misalnya untuk pengguna yang menyukai penulis *Thomas Robbins*, rekomendasi buku teratas yang mirip diberikan sebagai berikut:
+| book_author     | book_title       |
+|-----------------|------------------|
+| Elmore Leonard  | Tishomingo Blues |
+| Elmore Leonard  | Bandits          |
+| Elmore Leonard  | Out of Sight     |
+| Elmore Leonard  | Gold Coast       |
+| Elmore Leonard  | Cuba Libre       |
 
-Rubrik/Kriteria Tambahan (Opsional):
+2. **Collaborative Filtering RecommenderNet (Neural Network Embedding)**
+Collaborative Filtering didasarkan pada interaksi pengguna terhadap item. Sistem merekomendasikan buku yang disukai oleh pengguna lain yang memiliki preferensi serupa.
+**Proses Modeling**
+* Membuat model embedding untuk user dan buku dengan ukuran embedding 50.
+* Model mempelajari pola interaksi user-buku berdasarkan data rating atau feedback biner.
+* Model dilatih menggunakan optimizer Adam, loss BinaryCrossentropy, dan metrik RootMeanSquaredError (RMSE).
+* Setelah training selesai, model memprediksi skor kecocokan buku yang belum dikunjungi user.
+**Contoh Output Top-N Recommendation**
+Rekomendasi buku teratas untuk user tertentu berdasarkan prediksi model:
+Recommendations for User: 98484
+Books with High Ratings from User
+| Penulis           | Judul Buku                                                     |
+|-------------------|----------------------------------------------------------------|
+| Bill Bryson       | The Mother Tongue                                              |
+| Martin Cruz Smith | Red Square                                                    |
+| Edward Gorey      | The Haunted Looking Glass: Ghost Stories (New York Review Books Classics) |
+| Robert McCloskey  | Homer Price                                                   |
+| Aldous Huxley     | Brave New World                                               |
 
-Menyajikan dua solusi rekomendasi dengan algoritma yang berbeda.
-Menjelaskan kelebihan dan kekurangan dari solusi/pendekatan yang dipilih.
+---
+
+## Top 10 Book Recommendations
+
+| No | Penulis                  | Judul Buku                                            |
+|----|--------------------------|------------------------------------------------------|
+| 1  | James Patterson          | The Beach House                                      |
+| 2  | Stephen King             | The Tommyknockers                                    |
+| 3  | Matt Groening            | Work Is Hell                                        |
+| 4  | Bradley Trevor Greive    | The Blue Day Book                                   |
+| 5  | Alan Paton               | Cry, the Beloved Country (Oprah's Book Club)       |
+| 6  | Alex Kava                | The Soul Catcher: A Maggie O'Dell Novel             |
+| 7  | Mary Roach               | Stiff: The Curious Lives of Human Cadavers          |
+| 8  | Olivia Goldsmith         | Flavor of the Month                                 |
+| 9  | Anna Davis               | Cheet (Plume Books)                                 |
+| 10 | Charlotte Bronte         | Jane Eyre (Bantam Classics)                          |
+
+**Kelebihan dan Kekurangan Pendekatan**
+| Pendekatan                  | Kelebihan                                              | Kekurangan                                          |
+| --------------------------- | ------------------------------------------------------ | --------------------------------------------------- |
+| **Content-Based Filtering** | - Mudah diimplementasikan                              | - Sulit menangani cold-start user tanpa preferensi  |
+|                             | - Tidak membutuhkan data interaksi user secara luas    | - Rekomendasi terbatas pada fitur yang diekstrak    |
+|                             | - Hasil rekomendasi mudah dijelaskan                   | - Kurang variatif jika fitur buku sangat mirip      |
+| **Collaborative Filtering** | - Dapat menangkap pola preferensi user secara kompleks | - Membutuhkan data interaksi user yang cukup banyak |
+| (RecommenderNet)            | - Lebih personalisasi rekomendasi untuk tiap user      | - Memerlukan proses training dan tuning model       |
+|                             | - Bisa menemukan hubungan tersembunyi antar item       | - Rentan pada cold-start untuk user dan item baru   |
+* Kedua metode memberikan rekomendasi yang bermanfaat namun dengan keunggulan yang berbeda.
+* Content-Based Filtering efektif untuk data yang minim interaksi user, cocok untuk sistem baru.
+* Collaborative Filtering dengan embedding lebih powerful untuk personalisasi, namun memerlukan data interaksi yang cukup.
+
+
+
+
+
 
 
 
