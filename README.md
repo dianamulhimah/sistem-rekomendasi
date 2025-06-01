@@ -201,6 +201,7 @@ Content-Based Filtering merekomendasikan item berdasarkan kemiripan fitur antar 
 * Memberikan rekomendasi buku yang mirip dengan buku atau penulis yang dipilih pengguna.
 **Top-N Recommendation**
 Misalnya untuk pengguna yang menyukai penulis *Thomas Robbins*, rekomendasi buku teratas yang mirip diberikan sebagai berikut:
+
 | book_author     | book_title       |
 |-----------------|------------------|
 | Elmore Leonard  | Tishomingo Blues |
@@ -220,6 +221,8 @@ Collaborative Filtering didasarkan pada interaksi pengguna terhadap item. Sistem
 Rekomendasi buku teratas untuk user tertentu berdasarkan prediksi model:
 Recommendations for User: 98484
 Books with High Ratings from User
+
+
 | Penulis           | Judul Buku                                                     |
 |-------------------|----------------------------------------------------------------|
 | Bill Bryson       | The Mother Tongue                                              |
@@ -228,9 +231,7 @@ Books with High Ratings from User
 | Robert McCloskey  | Homer Price                                                   |
 | Aldous Huxley     | Brave New World                                               |
 
----
-
-## Top 10 Book Recommendations
+**Top 10 Book Recommendations**
 
 | No | Penulis                  | Judul Buku                                            |
 |----|--------------------------|------------------------------------------------------|
