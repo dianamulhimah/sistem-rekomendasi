@@ -80,15 +80,17 @@ Berisi informasi rating yang diberikan oleh pengguna terhadap buku:
 **Exploratory Data Analysis**
 * Distribusi Usia Pengguna
 ![distribusi-usia-pengguna](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/main/assets/distribusi-usia-pengguna.png)
-![Distribusi Usia Pengguna](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-usia-pengguna.png?raw=true)  
+![distribusi-usia-pengguna](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-usia-pengguna.png)
+![Distribusi Usia Pengguna](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-usia-pengguna.png?raw=true)
 Banyak pengguna berusia antara 20 hingga 50 tahun.
 
 * Distribusi Tahun Publikasi Buku
-![distribusi-tahun-publikasi-buku](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/main/assets/distribusi-tahun-publikasi-buku.png)
-![Distribusi Rating Pengguna](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-tahun-publikasi-buku.png?raw=true)
+![distribusi-tahun-publikasi-buku](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-tahun-publikasi-buku.png)
+![distribusi-tahun-publikasi-buku](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-tahun-publikasi-buku.png?raw=true)
 Banyak buku yang diterbitkan antara 1990 hingga awal 2000-an.
 
 * Distribusi Rating Pengguna
+![distribusi-rating-pengguna](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-usia-pengguna.png)
 ![distribusi-rating-pengguna](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-usia-pengguna.png?raw=true)
 <br/>Rating **0** mendominasi, artinya pengguna mungkin hanya memberi interaksi tanpa memberikan penilaian. Rating lainnya cenderung antara **6–10**, mengindikasikan lebih banyak feedback positif.
 
@@ -237,8 +239,7 @@ Sistem rekomendasi ini dibuat untuk membantu pengguna menemukan buku-buku yang s
 |                             | - Tidak membutuhkan data interaksi user secara luas    | - Rekomendasi terbatas pada fitur yang diekstrak    |
 |                             | - Hasil rekomendasi mudah dijelaskan                   | - Kurang variatif jika fitur buku sangat mirip      |
 | **Collaborative Filtering** | - Dapat menangkap pola preferensi user secara kompleks | - Membutuhkan data interaksi user yang cukup banyak |
-| (RecommenderNet)            | - Lebih personalisasi rekomendasi untuk tiap user      | - Memerlukan proses training dan tuning model       |
-|                             | - Bisa menemukan hubungan tersembunyi antar item       | - Rentan pada cold-start untuk user dan item baru   |
+|
 * Kedua metode memberikan rekomendasi yang bermanfaat namun dengan keunggulan yang berbeda.
 * Content-Based Filtering efektif untuk data yang minim interaksi user, cocok untuk sistem baru.
 * Collaborative Filtering dengan embedding lebih powerful untuk personalisasi, namun memerlukan data interaksi yang cukup.
@@ -261,11 +262,6 @@ $$
 * Menggunakan `TfidfVectorizer` untuk mengubah judul buku menjadi vektor numerik berdasarkan frekuensi kata.
 * Kemudian dihitung cosine similarity antar buku.
 * Sistem merekomendasikan 5 buku teratas yang paling mirip dengan buku yang pernah disukai oleh user
-```python
-tfidf = TfidfVectorizer()
-tfidf_matrix = tfidf.fit_transform(book_new['book_title'])
-cosine_sim = cosine_similarity(tfidf_matrix)
-```
 
 *  Evaluasi
 Berdasarkan histori sistem merekomendasikan **5 buku**. Setelah diverifikasi secara manual terhadap buku yang disukai user sebelumnya, ditemukan bahwa **4 dari 5 buku** yang direkomendasikan memiliki kemiripan tinggi.
@@ -296,7 +292,7 @@ $$
 * RMSE memiliki satuan yang sama dengan nilai target sehingga interpretasinya lebih mudah.
   
 **Grafik berikut menunjukkan perkembangan nilai RMSE selama proses pelatihan model pada tiap epoch:**
-
+![epoch](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/epoch.png?)
 * Pada awal pelatihan, RMSE pada data training dan testing relatif tinggi.
 * Seiring bertambahnya epoch, RMSE pada data training menurun secara signifikan, menandakan model semakin baik dalam memprediksi data pelatihan.
 * Namun, RMSE pada data testing setelah awal menurun sedikit malah mulai naik perlahan, yang mengindikasikan bahwa model mulai overfitting pada data training.
@@ -306,7 +302,6 @@ $$
 
 ## KESIMPULAN
 * CBF berhasil merekomendasikan buku yang mirip dengan buku yang disukai pengguna berdasarkan kontennya. Dengan memanfaatkan vektorisasi TF-IDF pada judul buku dan perhitungan kesamaan kosinus, model ini menunjukkan Precision@5 sebesar 80%. Ini berarti 4 dari 5 rekomendasi teratas terbukti relevan secara konten, secara efektif memenuhi kebutuhan pengguna akan saran buku yang konsisten dengan minat mereka sebelumnya. Pendekatan ini sangat efektif dalam situasi di mana data interaksi pengguna terbatas, atau ketika pengguna mencari variasi dalam kategori yang sama.
-
 * CF menjawab kebutuhan untuk memberikan rekomendasi buku yang belum pernah dibaca oleh pengguna tetapi mungkin disukai, berdasarkan perilaku pengguna lain. Dengan mengembangkan model RecommenderNet menggunakan neural network embedding, kami melatih sistem untuk menemukan pola kesamaan antar pengguna berdasarkan data rating. Meskipun terdapat indikasi overfitting yang perlu ditangani lebih lanjut (misalnya melalui teknik regularisasi atau penambahan data), model ini mampu mengidentifikasi dan menyarankan buku-buku baru yang memiliki kemungkinan tinggi untuk disukai oleh pengguna, yang didukung oleh preferensi kolektif dari komunitas pengguna.
 
 ## Referensi
