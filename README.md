@@ -291,6 +291,8 @@ $$
 ![epoch](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/epoch.png?raw=true)
 ![epoch](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/epoch.png)
 ![epoch](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/main/assets/epoch.png)
+![epoch](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/main/assets/epoch.png)
+
 
 * Pada awal pelatihan, RMSE pada data training dan testing relatif tinggi.
 * Seiring bertambahnya epoch, RMSE pada data training menurun secara signifikan, menandakan model semakin baik dalam memprediksi data pelatihan.
