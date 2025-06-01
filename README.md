@@ -200,7 +200,7 @@ Sistem rekomendasi ini dibuat untuk membantu pengguna menemukan buku-buku yang s
 <br/>Collaborative Filtering didasarkan pada interaksi pengguna terhadap item. Sistem merekomendasikan buku yang disukai oleh pengguna lain yang memiliki preferensi serupa.
 **Proses Modeling**
 * Membuat model embedding untuk user dan buku dengan ukuran embedding 50.
-* Model mempelajari pola interaksi user-buku berdasarkan data rating atau feedback biner.
+* model  menggunakan pendekatan Matrix Factorization (melalui embedding) yang merupakan inti dari RecommenderNet.
 * Model dilatih menggunakan optimizer Adam, loss BinaryCrossentropy, dan metrik RootMeanSquaredError (RMSE).
 * Setelah training selesai, model memprediksi skor kecocokan buku yang belum dikunjungi user.
 * <br/>**Top-N Recommendation**
@@ -295,10 +295,8 @@ $$
 * Nilai RMSE yang lebih kecil menunjukkan bahwa prediksi model lebih dekat dengan nilai asli, sehingga model memiliki performa yang lebih baik.
 * RMSE memiliki satuan yang sama dengan nilai target sehingga interpretasinya lebih mudah.
   
-**Grafik berikut menunjukkan perkembangan nilai RMSE selama proses pelatihan model pada tiap epoch (iterasi):**
+**Grafik berikut menunjukkan perkembangan nilai RMSE selama proses pelatihan model pada tiap epoch:**
 
-* **Garis biru (train)** menunjukkan RMSE pada data training.
-* **Garis oranye (test/val)** menunjukkan RMSE pada data pengujian/validasi.
 * Pada awal pelatihan, RMSE pada data training dan testing relatif tinggi.
 * Seiring bertambahnya epoch, RMSE pada data training menurun secara signifikan, menandakan model semakin baik dalam memprediksi data pelatihan.
 * Namun, RMSE pada data testing setelah awal menurun sedikit malah mulai naik perlahan, yang mengindikasikan bahwa model mulai overfitting pada data training.
@@ -306,7 +304,10 @@ $$
 * Namun, adanya kenaikan RMSE pada data testing setelah titik tertentu menunjukkan perlu adanya regularisasi atau teknik lain untuk menghindari overfitting.
 * Metrik RMSE memberikan gambaran kuantitatif mengenai performa prediksi model selama proses training dan testing, sehingga dapat digunakan sebagai panduan tuning parameter model lebih lanjut.
 
+## KESIMPULAN
+* CBF berhasil merekomendasikan buku yang mirip dengan buku yang disukai pengguna berdasarkan kontennya. Dengan memanfaatkan vektorisasi TF-IDF pada judul buku dan perhitungan kesamaan kosinus, model ini menunjukkan Precision@5 sebesar 80%. Ini berarti 4 dari 5 rekomendasi teratas terbukti relevan secara konten, secara efektif memenuhi kebutuhan pengguna akan saran buku yang konsisten dengan minat mereka sebelumnya. Pendekatan ini sangat efektif dalam situasi di mana data interaksi pengguna terbatas, atau ketika pengguna mencari variasi dalam kategori yang sama.
 
+* CF menjawab kebutuhan untuk memberikan rekomendasi buku yang belum pernah dibaca oleh pengguna tetapi mungkin disukai, berdasarkan perilaku pengguna lain. Dengan mengembangkan model RecommenderNet menggunakan neural network embedding, kami melatih sistem untuk menemukan pola kesamaan antar pengguna berdasarkan data rating. Meskipun terdapat indikasi overfitting yang perlu ditangani lebih lanjut (misalnya melalui teknik regularisasi atau penambahan data), model ini mampu mengidentifikasi dan menyarankan buku-buku baru yang memiliki kemungkinan tinggi untuk disukai oleh pengguna, yang didukung oleh preferensi kolektif dari komunitas pengguna.
 
 ## Referensi
 [^1]:	R. Akbar, D. Richasdy, and R. Dharayani, “Sistem Rekomendasi Buku Dengan Collaborative Filtering Menggunakan Metode Singular Value Decomposition ( SVD ),” e-Proceedings of Engineering, vol. 10, no. 5, 2023.
