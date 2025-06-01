@@ -20,7 +20,7 @@ Pada tahap ini, dilakukan proses klarifikasi terhadap permasalahan yang dihadapi
 * Memberikan rekomendasi buku yang belum dibaca oleh pengguna namun disukai oleh pengguna lain dengan pola rating serupa, menggunakan pendekatan Collaborative Filtering.
 
 ### Solution statements
-* Solution 1: Content-Based Filtering (CBF) Menganalisis metadata buku seperti Book Title, Author, Publisher, dan Year of Publication untuk merekomendasikan buku serupa dengan yang telah disukai atau dibaca oleh pengguna. Teknik yang digunakan yaitu TF-IDF vectorization dan Cosine similarity.
+* Solution 1: Content-Based Filtering (CBF) Menganalisis metadata buku untuk merekomendasikan buku serupa dengan yang telah disukai atau dibaca oleh pengguna. Teknik yang digunakan yaitu TF-IDF vectorization dan Cosine similarity.
 * Solution 2: Collaborative Filtering (CF) – Menganalisis interaksi pengguna terhadap buku (dalam bentuk data rating), dan menemukan pola kesamaan antar pengguna untuk merekomendasikan buku yang belum pernah dinilai oleh pengguna tersebut. Teknik yang digunakan evaluasi dengan metrik RMSE.
 
 ## Data Understanding
@@ -282,6 +282,29 @@ $$
 
 Hasil evaluasi menunjukkan bahwa sistem mampu memberikan rekomendasi yang cukup relevan dengan preferensi pengguna, dengan nilai **Precision\@5 sebesar 80%**. Ini menunjukkan potensi yang baik dari pendekatan content-based filtering.
 
+2. **Collaborative Filtering**
+**Metrik Evaluasi: Root Mean Squared Error (RMSE)** adalah metrik yang umum digunakan untuk mengukur selisih antara nilai yang diprediksi oleh model dengan nilai sebenarnya. RMSE dihitung dengan rumus berikut:
+
+$$
+\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y_i})^2}
+$$
+
+* $y_i$ adalah nilai aktual (ground truth) data ke-$i$
+* $\hat{y_i}$ adalah nilai prediksi model untuk data ke-$i$
+* $n$ adalah jumlah data sampel
+* Nilai RMSE yang lebih kecil menunjukkan bahwa prediksi model lebih dekat dengan nilai asli, sehingga model memiliki performa yang lebih baik.
+* RMSE memiliki satuan yang sama dengan nilai target sehingga interpretasinya lebih mudah.
+  
+**Grafik berikut menunjukkan perkembangan nilai RMSE selama proses pelatihan model pada tiap epoch (iterasi):**
+
+* **Garis biru (train)** menunjukkan RMSE pada data training.
+* **Garis oranye (test/val)** menunjukkan RMSE pada data pengujian/validasi.
+* Pada awal pelatihan, RMSE pada data training dan testing relatif tinggi.
+* Seiring bertambahnya epoch, RMSE pada data training menurun secara signifikan, menandakan model semakin baik dalam memprediksi data pelatihan.
+* Namun, RMSE pada data testing setelah awal menurun sedikit malah mulai naik perlahan, yang mengindikasikan bahwa model mulai overfitting pada data training.
+* Model berhasil belajar dengan baik di data training karena penurunan RMSE yang konsisten.
+* Namun, adanya kenaikan RMSE pada data testing setelah titik tertentu menunjukkan perlu adanya regularisasi atau teknik lain untuk menghindari overfitting.
+* Metrik RMSE memberikan gambaran kuantitatif mengenai performa prediksi model selama proses training dan testing, sehingga dapat digunakan sebagai panduan tuning parameter model lebih lanjut.
 
 
 
