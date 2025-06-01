@@ -98,10 +98,10 @@ Pada tahap ini, dilakukan serangkaian proses untuk menyiapkan data agar dapat di
 ```python
 books = books.drop(columns=['Image-URL-S', 'Image-URL-M', 'Image-URL-L'])
 ```
-**Alasan**: Kolom `Image-URL-S`, `Image-URL-M`, dan `Image-URL-L` berisi tautan gambar sampul buku yang tidak dibutuhkan dalam analisis. Penghapusan kolom ini bertujuan untuk mengurangi dimensi dataset dan fokus pada fitur yang relevan seperti judul buku, penulis, tahun terbit, dan penerbit.
+Alasan: Kolom `Image-URL-S`, `Image-URL-M`, dan `Image-URL-L` berisi tautan gambar sampul buku yang tidak dibutuhkan dalam analisis. Penghapusan kolom ini bertujuan untuk mengurangi dimensi dataset dan fokus pada fitur yang relevan seperti judul buku, penulis, tahun terbit, dan penerbit.
 
 * Sampling dan Penyaringan Data
-Alasan: Sampling 10.000 Pengguna Unik, dilakukan pengambilan sampel acak 10.000 pengguna untuk mengurangi ukuran data dan mempercepat proses analisis tanpa kehilangan keberagaman pengguna. Menyaring Data Rating Berdasarkan Pengguna Terpilih, data rating difilter agar hanya memuat penilaian dari 10.000 pengguna yang sudah dipilih, sehingga data lebih fokus dan relevan. Sampling 10.000 Buku dari Data Rating dipilih secara acak 10.000 buku berdasarkan rating dari pengguna terpilih untuk menjaga variasi buku sekaligus mengurangi beban pemrosesan. Pembatasan Data Rating Maksimal 10.000 Baris jumlah data rating dibatasi maksimal 10.000 baris agar proses komputasi lebih cepat dan efisien.Penyelarasan Dataset Buku dan Pengguna, dataset buku dan pengguna disesuaikan agar hanya berisi data yang terkait dengan rating terpilih demi menjaga konsistensi dan relevansi data.
+<br/>Alasan: Sampling 10.000 Pengguna Unik, dilakukan pengambilan sampel acak 10.000 pengguna untuk mengurangi ukuran data dan mempercepat proses analisis tanpa kehilangan keberagaman pengguna. Menyaring Data Rating Berdasarkan Pengguna Terpilih, data rating difilter agar hanya memuat penilaian dari 10.000 pengguna yang sudah dipilih, sehingga data lebih fokus dan relevan. Sampling 10.000 Buku dari Data Rating dipilih secara acak 10.000 buku berdasarkan rating dari pengguna terpilih untuk menjaga variasi buku sekaligus mengurangi beban pemrosesan. Pembatasan Data Rating Maksimal 10.000 Baris jumlah data rating dibatasi maksimal 10.000 baris agar proses komputasi lebih cepat dan efisien.Penyelarasan Dataset Buku dan Pengguna, dataset buku dan pengguna disesuaikan agar hanya berisi data yang terkait dengan rating terpilih demi menjaga konsistensi dan relevansi data.
 
 * Pemeriksaan Missing Values pada `ratings_sample`
 ```python
@@ -124,28 +124,28 @@ Alasan: Menggabungkan informasi judul dan penulis buku untuk memudahkan analisis
 ```python
 all_books_clean = all_books.dropna()
 ````
-Alasan: Pada tahap ini, data `all_books` dibersihkan dengan menghapus semua baris yang mengandung nilai kosong (missing value). Proses ini dilakukan menggunakan fungsi `dropna()` pada pandas. Setelah pembersihan, dataset `all_books_clean` hanya berisi data lengkap tanpa missing value, yaitu sebanyak 8960 baris. Hal ini memastikan data siap untuk analisis selanjutnya tanpa masalah data yang hilang.
+<br/>Alasan: Pada tahap ini, data `all_books` dibersihkan dengan menghapus semua baris yang mengandung nilai kosong (missing value). Proses ini dilakukan menggunakan fungsi `dropna()` pada pandas. Setelah pembersihan, dataset `all_books_clean` hanya berisi data lengkap tanpa missing value, yaitu sebanyak 8960 baris. Hal ini memastikan data siap untuk analisis selanjutnya tanpa masalah data yang hilang.
 
 * Menyalin Dataset ke Variabel Baru
 ```
 preparation = all_books_clean
 ```
 Dataset `all_books_clean` disalin ke variabel `preparation` untuk menjaga agar data asli tetap utuh dan tidak terpengaruh oleh proses preprocessing selanjutnya.
-Alasan: Praktik ini umum dilakukan agar apabila terjadi kesalahan selama manipulasi data, kita masih memiliki salinan data awal sebagai backup.
+<br/>Alasan: Praktik ini umum dilakukan agar apabila terjadi kesalahan selama manipulasi data, kita masih memiliki salinan data awal sebagai backup.
 
 * Menyortir Dataset berdasarkan ISBN
 ```python
 preparation.sort_values('ISBN')
 ```
 Dataset diurutkan berdasarkan kolom `'ISBN'`, meskipun hasilnya tidak disimpan kembali ke variabel `preparation` karena tidak menggunakan parameter `inplace=True` atau penugasan ulang.
-Alasan: Menyortir data bisa membantu dalam proses identifikasi data duplikat atau eksplorasi manual. Namun pada implementasi ini hasilnya tidak berpengaruh langsung ke data utama.
+<br/>Alasan: Menyortir data bisa membantu dalam proses identifikasi data duplikat atau eksplorasi manual. Namun pada implementasi ini hasilnya tidak berpengaruh langsung ke data utama.
 
 * Menghapus Duplikasi Berdasarkan ISBN
 ```python
 preparation = preparation.drop_duplicates('ISBN')
 ```
 Penjelasan Dataset difilter agar tidak mengandung ISBN yang sama (duplikat). ISBN merupakan identifier unik untuk setiap buku, sehingga setiap entri harus unik.
-Alasan: Menghindari redundansi data yang bisa mempengaruhi akurasi analisis dan rekomendasi buku di tahap selanjutnya.
+<br/>Alasan: Menghindari redundansi data yang bisa mempengaruhi akurasi analisis dan rekomendasi buku di tahap selanjutnya.
 
 * Mengonversi Series Menjadi List
 ```python
@@ -154,7 +154,7 @@ book_author = preparation['Book-Author'].tolist()
 book_title = preparation['Book-Title'].tolist()
 ```
 Penjelasan: Tiga kolom penting yaitu `ISBN`, `Book-Author`, dan `Book-Title` diubah dari bentuk pandas Series ke list Python.
-Alasan: List seringkali lebih mudah digunakan untuk proses pemetaan, perulangan eksplisit, dan pembuatan struktur data baru seperti dictionary atau DataFrame baru.
+<br/>Alasan: List seringkali lebih mudah digunakan untuk proses pemetaan, perulangan eksplisit, dan pembuatan struktur data baru seperti dictionary atau DataFrame baru.
 
 * Validasi Ukuran Dataset
 ```python
@@ -163,7 +163,7 @@ print(len(book_author))
 print(len(book_title))
 ```
 Mencetak panjang masing-masing list untuk memastikan bahwa seluruh data memiliki jumlah baris yang sama (6702).
-Alasan: Validasi ini penting untuk memastikan bahwa tidak terjadi kehilangan data atau ketidaksesuaian saat proses konversi dari Series ke List dan pembuatan DataFrame baru.
+<br/>Alasan: Validasi ini penting untuk memastikan bahwa tidak terjadi kehilangan data atau ketidaksesuaian saat proses konversi dari Series ke List dan pembuatan DataFrame baru.
 
 * Membuat DataFrame Baru dengan Kolom Tertentu
 ```python
@@ -174,7 +174,7 @@ book_new = pd.DataFrame({
 })
 ```
 Dibuat DataFrame baru `book_new` yang hanya memuat kolom `id` (dari ISBN), `book_author`, dan `book_title`.
-Alasan: Struktur ini lebih ringan dan fokus untuk digunakan pada sistem rekomendasi, serta memudahkan pencocokan dan filtering data.
+<br/>Alasan: Struktur ini lebih ringan dan fokus untuk digunakan pada sistem rekomendasi, serta memudahkan pencocokan dan filtering data.
 
 
 
