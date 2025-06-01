@@ -92,7 +92,7 @@ Banyak buku yang diterbitkan antara 1990 hingga awal 2000-an.
 ![distribusi-rating-pengguna](https://github.com/dianamulhimah/sistem-rekomendasi/blob/main/assets/distribusi-usia-pengguna.png?raw=true)
 <br/>Rating **0** mendominasi, artinya pengguna mungkin hanya memberi interaksi tanpa memberikan penilaian. Rating lainnya cenderung antara **6–10**, mengindikasikan lebih banyak feedback positif.
 
-
+## Data Preparation
 Pada tahap ini, dilakukan serangkaian proses untuk menyiapkan data agar dapat digunakan dalam pembuatan sistem rekomendasi. Tahapan data preparation ini mencakup pembersihan data (menghapus duplikat), konversi data menjadi format yang lebih fleksibel, dan pemilahan data menjadi subset yang relevan.
 * Menghapus Kolom Tidak Relevan dari Dataset `books`
 ```python
@@ -176,20 +176,6 @@ book_new = pd.DataFrame({
 Dibuat DataFrame baru `book_new` yang hanya memuat kolom `id` (dari ISBN), `book_author`, dan `book_title`.
 <br/>Alasan: Struktur ini lebih ringan dan fokus untuk digunakan pada sistem rekomendasi, serta memudahkan pencocokan dan filtering data.
 
-
-
-
-## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
-
-Rubrik/Kriteria Tambahan (Opsional):
-
-Menjelaskan proses data preparation yang dilakukan
-Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
-
-
-
-
 ## Modeling
 Sistem rekomendasi ini dibuat untuk membantu pengguna menemukan buku-buku yang sesuai dengan minat dan preferensi mereka berdasarkan data yang tersedia, seperti judul buku, penulis, dan interaksi pengguna terhadap buku tersebut.
 1. **Content-Based Filtering (TF-IDF + Cosine Similarity)**
@@ -199,8 +185,8 @@ Sistem rekomendasi ini dibuat untuk membantu pengguna menemukan buku-buku yang s
 * Membentuk matriks fitur TF-IDF untuk tiap judul buku.
 * Menghitung cosine similarity antar buku berdasarkan fitur tersebut.
 * Memberikan rekomendasi buku yang mirip dengan buku atau penulis yang dipilih pengguna.
-<br/>**Top-N Recommendation**
-Misalnya untuk pengguna yang menyukai penulis *Thomas Robbins*, rekomendasi buku teratas yang mirip diberikan sebagai berikut:
+* <br/>**Top-N Recommendation**
+<br/>Misalnya untuk pengguna yang menyukai penulis *Thomas Robbins*, rekomendasi buku teratas yang mirip diberikan sebagai berikut:
 
 | book_author     | book_title       |
 |-----------------|------------------|
@@ -217,7 +203,7 @@ Misalnya untuk pengguna yang menyukai penulis *Thomas Robbins*, rekomendasi buku
 * Model mempelajari pola interaksi user-buku berdasarkan data rating atau feedback biner.
 * Model dilatih menggunakan optimizer Adam, loss BinaryCrossentropy, dan metrik RootMeanSquaredError (RMSE).
 * Setelah training selesai, model memprediksi skor kecocokan buku yang belum dikunjungi user.
-<br/>**Top-N Recommendation**
+* <br/>**Top-N Recommendation**
 <br/>Recommendations for User: 98484
 <br/>Books with High Ratings from User
 
