@@ -243,22 +243,44 @@ Sistem rekomendasi ini dibuat untuk membantu pengguna menemukan buku-buku yang s
 * Content-Based Filtering efektif untuk data yang minim interaksi user, cocok untuk sistem baru.
 * Collaborative Filtering dengan embedding lebih powerful untuk personalisasi, namun memerlukan data interaksi yang cukup.
 
-
-
-
-
-
-
-
 ## Evaluation
-Pada bagian ini Anda perlu menyebutkan metrik evaluasi yang digunakan. Kemudian, jelaskan hasil proyek berdasarkan metrik evaluasi tersebut.
+1. **Content-Based Filtering**
+Pada proyek sistem rekomendasi berbasis **Content-Based Filtering** ini, dilakukan evaluasi terhadap hasil rekomendasi menggunakan metrik **Precision\@N**, untuk mengetahui seberapa relevan hasil rekomendasi sistem terhadap preferensi pengguna. Metrik ini sangat sesuai digunakan pada sistem rekomendasi karena tidak memerlukan label eksplisit seperti pada supervised learning. Cocok untuk mengevaluasi kualitas Top-N rekomendasi. Fokus pada relevansi item yang diberikan kepada pengguna.
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+**Metrik yang Digunakan: Precision\@5**
+**Precision\@N** digunakan untuk mengukur seberapa banyak item yang relevan dari total item yang direkomendasikan:
 
-Rubrik/Kriteria Tambahan (Opsional):
+$$
+\text{Precision@N} = \frac{|\text{Item relevan dan direkomendasikan}|}{N}
+$$
 
-Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
----Ini adalah bagian akhir laporan---
+* **N = 5**, yaitu jumlah buku yang direkomendasikan untuk user.
+* **Item relevan** adalah buku yang memiliki kemiripan konten tinggi dengan buku yang pernah disukai oleh pengguna.
+
+**Metode yang Digunakan**
+* Menggunakan `TfidfVectorizer` untuk mengubah judul buku menjadi vektor numerik berdasarkan frekuensi kata.
+* Kemudian dihitung cosine similarity antar buku.
+* Sistem merekomendasikan 5 buku teratas yang paling mirip dengan buku yang pernah disukai oleh user
+```python
+tfidf = TfidfVectorizer()
+tfidf_matrix = tfidf.fit_transform(book_new['book_title'])
+cosine_sim = cosine_similarity(tfidf_matrix)
+```
+
+*  Evaluasi
+Berdasarkan histori sistem merekomendasikan **5 buku**. Setelah diverifikasi secara manual terhadap buku yang disukai user sebelumnya, ditemukan bahwa **4 dari 5 buku** yang direkomendasikan memiliki kemiripan tinggi.
+
+* Hasil Evaluasi
+* **Jumlah rekomendasi:** 5 buku
+* **Jumlah yang relevan:** 4 buku
+
+Sehingga, perhitungan Precision\@5 adalah:
+
+$$
+\text{Precision@5} = \frac{4}{5} = 0.8 \text{ atau } 80\%
+$$
+
+Hasil evaluasi menunjukkan bahwa sistem mampu memberikan rekomendasi yang cukup relevan dengan preferensi pengguna, dengan nilai **Precision\@5 sebesar 80%**. Ini menunjukkan potensi yang baik dari pendekatan content-based filtering.
 
 
 
