@@ -78,43 +78,54 @@ Banyak buku yang diterbitkan antara 1990 hingga awal 2000-an.
 <br/>Rating **0** mendominasi, artinya pengguna mungkin hanya memberi interaksi tanpa memberikan penilaian. Rating lainnya cenderung antara **6–10**, mengindikasikan lebih banyak feedback positif.
 
 ## Data Preparation
-## Data Preparation
-
 Tahap ini bertujuan untuk menyiapkan data agar dapat digunakan dalam membangun sistem rekomendasi, baik untuk pendekatan Content-Based Filtering maupun Collaborative Filtering. Teknik data preparation dilakukan secara sistematis untuk membersihkan, menyaring, dan memformat data ke dalam struktur yang sesuai untuk pemodelan.
-
----
-
-### 1. Menghapus Kolom Tidak Relevan dari Dataset Buku
+* Menghapus Kolom Tidak Relevan dari Dataset Buku
 **Alasan:** Kolom ini hanya berisi URL gambar yang tidak diperlukan untuk proses rekomendasi dan akan membebani memori.
-
-### 2. Sampling dan Penyaringan Data
+* Sampling dan Penyaringan Data
 **Alasan:** Sampling digunakan untuk membatasi ukuran dataset agar proses komputasi lebih efisien tanpa menghilangkan keberagaman data.
-
-### 3. Pemeriksaan Missing Value
+* Pemeriksaan Missing Value
 **Alasan:** Memastikan bahwa data yang akan dipakai tidak memiliki nilai kosong yang dapat mengganggu analisis.
-
-### 4. Penggabungan Rating dengan Metadata Buku
+* Penggabungan Rating dengan Metadata Buku
 **Alasan:** Diperlukan untuk menyatukan informasi buku dan rating agar dapat digunakan dalam filtering berbasis konten.
-
-### 5. Menghapus Missing Value
+* Menghapus Missing Value
 **Alasan:** Untuk memastikan hanya data lengkap yang diproses dalam tahap berikutnya.
-
-### 6. Penghapusan Duplikasi Berdasarkan ISBN
+* Penghapusan Duplikasi Berdasarkan ISBN
 **Alasan:** Menghindari pengulangan buku yang sama yang dapat memengaruhi hasil rekomendasi.
 
-### 7. Konversi Series Menjadi List dan Pembuatan DataFrame Sederhana
-**Alasan:** Dibuat agar lebih mudah diolah dalam proses Content-Based Filtering.
+### Data Preparation untuk algoritma Content-Based Filtering (CBF)
+* Konversi Kolom Menjadi List dan Pembuatan DataFrame
+**Alasan:** Untuk membentuk dataset baru yang lebih ringan dan hanya memuat kolom yang diperlukan dalam model CBF.
+* Inisialisasi dan Penerapan TF-IDF
+```python
+from sklearn.feature_extraction.text import TfidfVectorizer
 
-### 8. TF-IDF Vectorization (Untuk Content-Based Filtering)
-**Alasan:** Mengubah data teks menjadi representasi numerik agar dapat dihitung kemiripannya menggunakan cosine similarity.
+tf = TfidfVectorizer()
+tfidf_matrix = tf.fit_transform(book_new['book_title'])
+```
+**Alasan:** Judul buku dikonversi ke dalam representasi numerik menggunakan TF-IDF agar dapat dihitung kemiripan antar buku.
+* Pemeriksaan Matrix TF-IDF
+**Alasan:** Untuk memverifikasi isi dan struktur dari hasil transformasi TF-IDF.
 
-### 9. Encoding User-ID dan ISBN (Untuk Collaborative Filtering)
+### Data Preparation untuk algoritma Collaborative Filtering (CF)
+* Encoding User-ID dan ISBN
+```python
+user_ids = ratings_sample['User-ID'].unique().tolist()
+user_to_user_encoded = {x: i for i, x in enumerate(user_ids)}
+user_encoded_to_user = {i: x for i, x in enumerate(user_ids)}
+
+book_ids = ratings_sample['ISBN'].unique().tolist()
+book_to_book_encoded = {x: i for i, x in enumerate(book_ids)}
+book_encoded_to_book = {i: x for i, x in enumerate(book_ids)}
+
+ratings_sample['user'] = ratings_sample['User-ID'].map(user_to_user_encoded)
+ratings_sample['book'] = ratings_sample['ISBN'].map(book_to_book_encoded)
+```
 **Alasan:** Algoritma embedding pada model deep learning membutuhkan data numerik, sehingga encoding diperlukan agar ID pengguna dan buku bisa diproses oleh model.
-
-### 10. Normalisasi Rating dan Split Data
+* Normalisasi Rating dan Pembagian Data Train/Validation
 **Alasan:** Rating dinormalisasi agar berada pada skala 0–1 untuk memudahkan pelatihan model. Data juga dibagi menjadi train dan validation untuk keperluan evaluasi model.
+**Seluruh tahapan ini dilakukan agar data memiliki kualitas yang baik, bebas duplikat dan missing value, serta dalam format numerik dan struktural yang dapat digunakan untuk modeling sistem rekomendasi berbasis content maupun collaborative filtering.**
 
-Seluruh tahapan ini dilakukan agar data memiliki kualitas yang baik, bebas duplikat dan missing value, serta dalam format numerik dan struktural yang dapat digunakan untuk modeling sistem rekomendasi berbasis content maupun collaborative filtering.
+
 
 
 ## Modeling
