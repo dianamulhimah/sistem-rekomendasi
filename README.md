@@ -78,88 +78,44 @@ Banyak buku yang diterbitkan antara 1990 hingga awal 2000-an.
 <br/>Rating **0** mendominasi, artinya pengguna mungkin hanya memberi interaksi tanpa memberikan penilaian. Rating lainnya cenderung antara **6–10**, mengindikasikan lebih banyak feedback positif.
 
 ## Data Preparation
-Pada tahap ini, dilakukan serangkaian proses untuk menyiapkan data agar dapat digunakan dalam pembuatan sistem rekomendasi. Tahapan data preparation ini mencakup pembersihan data (menghapus duplikat), konversi data menjadi format yang lebih fleksibel, dan pemilahan data menjadi subset yang relevan.
-* Menghapus Kolom Tidak Relevan dari Dataset `books`
-```python
-books = books.drop(columns=['Image-URL-S', 'Image-URL-M', 'Image-URL-L'])
-```
-Alasan: Kolom `Image-URL-S`, `Image-URL-M`, dan `Image-URL-L` berisi tautan gambar sampul buku yang tidak dibutuhkan dalam analisis. Penghapusan kolom ini bertujuan untuk mengurangi dimensi dataset dan fokus pada fitur yang relevan seperti judul buku, penulis, tahun terbit, dan penerbit.
+## Data Preparation
 
-* Sampling dan Penyaringan Data
-<br/>Alasan: Sampling 10.000 Pengguna Unik, dilakukan pengambilan sampel acak 10.000 pengguna untuk mengurangi ukuran data dan mempercepat proses analisis tanpa kehilangan keberagaman pengguna. Menyaring Data Rating Berdasarkan Pengguna Terpilih, data rating difilter agar hanya memuat penilaian dari 10.000 pengguna yang sudah dipilih, sehingga data lebih fokus dan relevan. Sampling 10.000 Buku dari Data Rating dipilih secara acak 10.000 buku berdasarkan rating dari pengguna terpilih untuk menjaga variasi buku sekaligus mengurangi beban pemrosesan. Pembatasan Data Rating Maksimal 10.000 Baris jumlah data rating dibatasi maksimal 10.000 baris agar proses komputasi lebih cepat dan efisien.Penyelarasan Dataset Buku dan Pengguna, dataset buku dan pengguna disesuaikan agar hanya berisi data yang terkait dengan rating terpilih demi menjaga konsistensi dan relevansi data.
+Tahap ini bertujuan untuk menyiapkan data agar dapat digunakan dalam membangun sistem rekomendasi, baik untuk pendekatan Content-Based Filtering maupun Collaborative Filtering. Teknik data preparation dilakukan secara sistematis untuk membersihkan, menyaring, dan memformat data ke dalam struktur yang sesuai untuk pemodelan.
 
-* Pemeriksaan Missing Values pada `ratings_sample`
-```python
-ratings_sample.isnull().sum()
-```
-Hasil: Semua nilai dalam `ratings_sample` terdeteksi **tidak ada yang kosong (null)**.
+---
 
-* Penggabungan Data Rating dengan Informasi Buku
-```python
-all_books = pd.merge(
-    ratings_sample,
-    books[['ISBN', 'Book-Title', 'Book-Author']],
-    on='ISBN',
-    how='left'
-)
-```
-Alasan: Menggabungkan informasi judul dan penulis buku untuk memudahkan analisis, visualisasi, serta pembangunan sistem rekomendasi berbasis konten (Content-Based Filtering).
+### 1. Menghapus Kolom Tidak Relevan dari Dataset Buku
+**Alasan:** Kolom ini hanya berisi URL gambar yang tidak diperlukan untuk proses rekomendasi dan akan membebani memori.
 
-* Menghapus Missing Value
-```python
-all_books_clean = all_books.dropna()
-````
-<br/>Alasan: Pada tahap ini, data `all_books` dibersihkan dengan menghapus semua baris yang mengandung nilai kosong (missing value). Proses ini dilakukan menggunakan fungsi `dropna()` pada pandas. Setelah pembersihan, dataset `all_books_clean` hanya berisi data lengkap tanpa missing value, yaitu sebanyak 8960 baris. Hal ini memastikan data siap untuk analisis selanjutnya tanpa masalah data yang hilang.
+### 2. Sampling dan Penyaringan Data
+**Alasan:** Sampling digunakan untuk membatasi ukuran dataset agar proses komputasi lebih efisien tanpa menghilangkan keberagaman data.
 
-* Menyalin Dataset ke Variabel Baru
-```
-preparation = all_books_clean
-```
-Dataset `all_books_clean` disalin ke variabel `preparation` untuk menjaga agar data asli tetap utuh dan tidak terpengaruh oleh proses preprocessing selanjutnya.
-<br/>Alasan: Praktik ini umum dilakukan agar apabila terjadi kesalahan selama manipulasi data, kita masih memiliki salinan data awal sebagai backup.
+### 3. Pemeriksaan Missing Value
+**Alasan:** Memastikan bahwa data yang akan dipakai tidak memiliki nilai kosong yang dapat mengganggu analisis.
 
-* Menyortir Dataset berdasarkan ISBN
-```python
-preparation.sort_values('ISBN')
-```
-Dataset diurutkan berdasarkan kolom `'ISBN'`, meskipun hasilnya tidak disimpan kembali ke variabel `preparation` karena tidak menggunakan parameter `inplace=True` atau penugasan ulang.
-<br/>Alasan: Menyortir data bisa membantu dalam proses identifikasi data duplikat atau eksplorasi manual. Namun pada implementasi ini hasilnya tidak berpengaruh langsung ke data utama.
+### 4. Penggabungan Rating dengan Metadata Buku
+**Alasan:** Diperlukan untuk menyatukan informasi buku dan rating agar dapat digunakan dalam filtering berbasis konten.
 
-* Menghapus Duplikasi Berdasarkan ISBN
-```python
-preparation = preparation.drop_duplicates('ISBN')
-```
-Penjelasan Dataset difilter agar tidak mengandung ISBN yang sama (duplikat). ISBN merupakan identifier unik untuk setiap buku, sehingga setiap entri harus unik.
-<br/>Alasan: Menghindari redundansi data yang bisa mempengaruhi akurasi analisis dan rekomendasi buku di tahap selanjutnya.
+### 5. Menghapus Missing Value
+**Alasan:** Untuk memastikan hanya data lengkap yang diproses dalam tahap berikutnya.
 
-* Mengonversi Series Menjadi List
-```python
-book_id = preparation['ISBN'].tolist()
-book_author = preparation['Book-Author'].tolist()
-book_title = preparation['Book-Title'].tolist()
-```
-Penjelasan: Tiga kolom penting yaitu `ISBN`, `Book-Author`, dan `Book-Title` diubah dari bentuk pandas Series ke list Python.
-<br/>Alasan: List seringkali lebih mudah digunakan untuk proses pemetaan, perulangan eksplisit, dan pembuatan struktur data baru seperti dictionary atau DataFrame baru.
+### 6. Penghapusan Duplikasi Berdasarkan ISBN
+**Alasan:** Menghindari pengulangan buku yang sama yang dapat memengaruhi hasil rekomendasi.
 
-* Validasi Ukuran Dataset
-```python
-print(len(book_id))
-print(len(book_author))
-print(len(book_title))
-```
-Mencetak panjang masing-masing list untuk memastikan bahwa seluruh data memiliki jumlah baris yang sama (6702).
-<br/>Alasan: Validasi ini penting untuk memastikan bahwa tidak terjadi kehilangan data atau ketidaksesuaian saat proses konversi dari Series ke List dan pembuatan DataFrame baru.
+### 7. Konversi Series Menjadi List dan Pembuatan DataFrame Sederhana
+**Alasan:** Dibuat agar lebih mudah diolah dalam proses Content-Based Filtering.
 
-* Membuat DataFrame Baru dengan Kolom Tertentu
-```python
-book_new = pd.DataFrame({
-    'id': book_id,
-    'book_author': book_author,
-    'book_title': book_title
-})
-```
-Dibuat DataFrame baru `book_new` yang hanya memuat kolom `id` (dari ISBN), `book_author`, dan `book_title`.
-<br/>Alasan: Struktur ini lebih ringan dan fokus untuk digunakan pada sistem rekomendasi, serta memudahkan pencocokan dan filtering data.
+### 8. TF-IDF Vectorization (Untuk Content-Based Filtering)
+**Alasan:** Mengubah data teks menjadi representasi numerik agar dapat dihitung kemiripannya menggunakan cosine similarity.
+
+### 9. Encoding User-ID dan ISBN (Untuk Collaborative Filtering)
+**Alasan:** Algoritma embedding pada model deep learning membutuhkan data numerik, sehingga encoding diperlukan agar ID pengguna dan buku bisa diproses oleh model.
+
+### 10. Normalisasi Rating dan Split Data
+**Alasan:** Rating dinormalisasi agar berada pada skala 0–1 untuk memudahkan pelatihan model. Data juga dibagi menjadi train dan validation untuk keperluan evaluasi model.
+
+Seluruh tahapan ini dilakukan agar data memiliki kualitas yang baik, bebas duplikat dan missing value, serta dalam format numerik dan struktural yang dapat digunakan untuk modeling sistem rekomendasi berbasis content maupun collaborative filtering.
+
 
 ## Modeling
 Sistem rekomendasi ini dibuat untuk membantu pengguna menemukan buku-buku yang sesuai dengan minat dan preferensi mereka berdasarkan data yang tersedia, seperti judul buku, penulis, dan interaksi pengguna terhadap buku tersebut.
