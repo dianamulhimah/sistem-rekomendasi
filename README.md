@@ -13,7 +13,7 @@ Proyek ini bertujuan untuk mengembangkan sistem rekomendasi buku dengan mengombi
 Pada tahap ini, dilakukan proses klarifikasi terhadap permasalahan yang dihadapi pengguna dalam menemukan buku yang relevan dengan preferensi mereka. Banyak pengguna kesulitan menemukan buku serupa setelah menyukai suatu buku karena keterbatasan informasi atau banyaknya pilihan yang tersedia. Selain itu, pengguna juga sering melewatkan buku-buku potensial yang belum pernah mereka baca karena tidak muncul dalam pencarian atau rekomendasi.
 
 ### Problem Statements
-*	Bagaimana sistem dapat merekomendasikan buku yang mirip dengan buku yang disukai oleh pengguna berdasarkan kontennya?
+* Bagaimana sistem dapat merekomendasikan buku yang mirip dengan buku yang disukai oleh pengguna berdasarkan kontennya?
 * Bagaimana sistem dapat memberikan rekomendasi buku yang belum pernah dibaca oleh pengguna tetapi mungkin disukai, berdasarkan perilaku pengguna lain?
 
 ### Goals
@@ -21,8 +21,8 @@ Pada tahap ini, dilakukan proses klarifikasi terhadap permasalahan yang dihadapi
 * Memberikan rekomendasi buku yang belum dibaca oleh pengguna namun disukai oleh pengguna lain dengan pola rating serupa, menggunakan pendekatan Collaborative Filtering.
 
 ### Solution statements
-* Solution 1: Content-Based Filtering (CBF) Menganalisis metadata buku untuk merekomendasikan buku serupa dengan yang telah disukai atau dibaca oleh pengguna. Teknik yang digunakan yaitu TF-IDF vectorization dan Cosine similarity.
-* Solution 2: Collaborative Filtering (CF) – Menganalisis interaksi pengguna terhadap buku (dalam bentuk data rating), dan menemukan pola kesamaan antar pengguna untuk merekomendasikan buku yang belum pernah dinilai oleh pengguna tersebut. Teknik yang digunakan evaluasi dengan metrik RMSE.
+* Solution 1: Content-Based Filtering (CBF) –  Menganalisis metadata buku untuk merekomendasikan buku serupa dengan yang telah disukai atau dibaca oleh pengguna menggunakan teknik TF-IDF vectorization untuk merepresentasikan teks judul buku ke dalam vektor numerik. Kemiripan dihitung dengan **Cosine Similarity** untuk mendapatkan buku-buku yang secara konten mirip.
+* Solution 2: Collaborative Filtering (CF) –  Menganalisis interaksi pengguna terhadap buku (dalam bentuk data rating), dan menemukan pola kesamaan antar pengguna untuk merekomendasikan buku yang belum pernah dinilai oleh pengguna tersebut menggunakan teknik **Matrix Factorization** untuk menemukan pola interaksi pengguna, dan dievaluasi menggunakan metrik seperti **RMSE** untuk mengukur akurasi prediksi rating.
 
 ## Data Understanding
 Pada proyek ini, kita menggunakan **Book Recommendation Dataset** yang tersedia secara publik melalui situs  yang bersumber dari [Kaggle](https://https://www.kaggle.com/). Dataset ini berisi informasi tentang buku, pengguna, serta rating yang diberikan oleh pengguna terhadap buku-buku tersebut. Dataset ini sering digunakan dalam tugas sistem rekomendasi karena kompleksitas dan keragaman datanya.
@@ -302,7 +302,7 @@ Hasil evaluasi menunjukkan bahwa **semua** buku yang direkomendasikan oleh model
 * Precision\@K sangat tepat digunakan karena:
   * **Fokus pada relevansi rekomendasi**, bukan prediksi rating.
   * Cocok untuk kasus **top-N recommendation**, seperti daftar 5 atau 10 buku.
-<br/>Penggunaan **Precision\@5** dalam sistem Content-Based Filtering memberikan gambaran yang jelas mengenai **akurasi relevansi rekomendasi** yang dihasilkan. Nilai 100% menunjukkan bahwa pendekatan ini **efektif**, setidaknya untuk kasus pengujian ini.
+* Penggunaan **Precision\@5** dalam sistem Content-Based Filtering memberikan gambaran yang jelas mengenai **akurasi relevansi rekomendasi** yang dihasilkan. Nilai 100% menunjukkan bahwa pendekatan ini **efektif**, setidaknya untuk kasus pengujian ini.
 
 ### 2. **Collaborative Filtering**
 **Metrik Evaluasi: Root Mean Squared Error (RMSE)** adalah metrik yang umum digunakan untuk mengukur seberapa jauh nilai prediksi model menyimpang dari nilai aktual (rating sebenarnya). RMSE dihitung dengan rumus:
@@ -331,12 +331,10 @@ Grafik di atas menunjukkan performa model selama 100 epoch. Terlihat bahwa:
 * **Final RMSE (Validation):** 0.3960
 * Model sangat baik dalam mempelajari data pelatihan, namun mulai overfitting terhadap data validasi setelah sejumlah epoch.
 * Nilai RMSE validasi sebesar **0.3960** masih dalam batas wajar, namun dapat ditingkatkan dengan regularisasi lebih baik atau teknik lain seperti early stopping.
-* RMSE cocok digunakan pada konteks **regresi**, di mana model memprediksi nilai rating numerik yang kontinu.
-
 
 ## KESIMPULAN
-* CBF berhasil merekomendasikan buku yang mirip dengan buku yang disukai pengguna berdasarkan kontennya. Dengan memanfaatkan vektorisasi TF-IDF pada judul buku dan perhitungan kesamaan kosinus, model ini menunjukkan Precision@5 sebesar 100%. Ini berarti 4 dari 5 rekomendasi teratas terbukti relevan secara konten, secara efektif memenuhi kebutuhan pengguna akan saran buku yang konsisten dengan minat mereka sebelumnya. Pendekatan ini sangat efektif dalam situasi di mana data interaksi pengguna terbatas, atau ketika pengguna mencari variasi dalam kategori yang sama.
-* CF menjawab kebutuhan untuk memberikan rekomendasi buku yang belum pernah dibaca oleh pengguna tetapi mungkin disukai, berdasarkan perilaku pengguna lain. Dengan mengembangkan model RecommenderNet menggunakan neural network embedding, kami melatih sistem untuk menemukan pola kesamaan antar pengguna berdasarkan data rating. Meskipun terdapat indikasi overfitting yang perlu ditangani lebih lanjut (misalnya melalui teknik regularisasi atau penambahan data), model ini mampu mengidentifikasi dan menyarankan buku-buku baru yang memiliki kemungkinan tinggi untuk disukai oleh pengguna, yang didukung oleh preferensi kolektif dari komunitas pengguna.
+* Melalui pendekatan Content-Based Filtering, sistem memanfaatkan metadata buku khususnya judul dan penulis yang dikonversi menjadi representasi numerik menggunakan TF-IDF Vectorization. Dengan menghitung Cosine Similarity, sistem mampu mengidentifikasi dan merekomendasikan buku-buku yang memiliki kemiripan konten dengan buku yang sebelumnya disukai oleh pengguna. Sistem mampu memberikan rekomendasi buku-buku serupa secara personal tanpa bergantung pada data pengguna lain. Ini sangat efektif bagi pengguna baru atau dalam konteks data interaksi yang terbatas (cold start).
+* Dengan pendekatan Collaborative Filtering, sistem menganalisis pola rating antar pengguna. Model dievaluasi menggunakan metrik Root Mean Squared Error (RMSE) untuk menilai kualitas prediksi rating. RMSE yang rendah menunjukkan sistem dapat secara akurat memprediksi preferensi pengguna. Sistem berhasil memberikan rekomendasi buku yang relevan dengan preferensi pengguna lain yang memiliki pola perilaku serupa, bahkan untuk buku yang belum pernah dilihat oleh pengguna target.
 
 ## Referensi
 [^1]:	R. Akbar, D. Richasdy, and R. Dharayani, “Sistem Rekomendasi Buku Dengan Collaborative Filtering Menggunakan Metode Singular Value Decomposition ( SVD ),” e-Proceedings of Engineering, vol. 10, no. 5, 2023.
