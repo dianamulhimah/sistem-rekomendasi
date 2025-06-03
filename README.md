@@ -3,7 +3,6 @@
 ## Book Recommendation Dataset
 
 ## Project Overview
-
 Seiring dengan berkembangnya teknologi informasi dan meningkatnya kebutuhan akan akses informasi yang cepat dan relevan, sistem rekomendasi memainkan peran penting dalam membantu pengguna menavigasi volume data yang sangat besar. Dalam konteks perpustakaan maupun aplikasi digital berbasis literasi, pengguna sering mengalami kesulitan dalam menemukan buku yang sesuai dengan preferensi mereka. Hal ini disebabkan oleh berbagai faktor, seperti keterbatasan waktu, minimnya informasi, serta banyaknya pilihan yang tersedia.
 Untuk mengatasi permasalahan tersebut, sistem rekomendasi buku hadir sebagai solusi yang cerdas dengan tujuan menyederhanakan proses pencarian informasi dan meningkatkan pengalaman pengguna. Sistem ini bekerja dengan menganalisis perilaku pengguna, preferensi individu, serta karakteristik konten buku untuk memberikan rekomendasi yang relevan dan personal.
 Salah satu pendekatan utama yang digunakan dalam sistem rekomendasi adalah Collaborative Filtering (CF), yang memanfaatkan interaksi dan penilaian dari banyak pengguna untuk menyarankan item yang disukai oleh pengguna dengan pola preferensi serupa. Metode ini terbagi menjadi dua, yaitu user-based dan item-based. CF terbukti efektif terutama saat tersedia data interaksi pengguna yang cukup banyak dan konsisten. Sebagai contoh, [^1] menerapkan algoritma Singular Value Decomposition (SVD) dalam CF, yang berhasil mereduksi sparsity dan meningkatkan kualitas prediksi rekomendasi buku.
@@ -26,20 +25,6 @@ Pada tahap ini, dilakukan proses klarifikasi terhadap permasalahan yang dihadapi
 * Solution 2: Collaborative Filtering (CF) – Menganalisis interaksi pengguna terhadap buku (dalam bentuk data rating), dan menemukan pola kesamaan antar pengguna untuk merekomendasikan buku yang belum pernah dinilai oleh pengguna tersebut. Teknik yang digunakan evaluasi dengan metrik RMSE.
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai jumlah data, kondisi data, dan informasi mengenai data yang digunakan. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: UCI Machine Learning Repository.
-
-Selanjutnya, uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:
-
-Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
-
-accepts : merupakan jenis pembayaran yang diterima pada restoran tertentu.
-cuisine : merupakan jenis masakan yang disajikan pada restoran.
-dst
-Rubrik/Kriteria Tambahan (Opsional):
-
-Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data beserta insight atau exploratory data analysis.
-
-
 Pada proyek ini, kita menggunakan **Book Recommendation Dataset** yang tersedia secara publik melalui situs  yang bersumber dari [Kaggle](https://https://www.kaggle.com/). Dataset ini berisi informasi tentang buku, pengguna, serta rating yang diberikan oleh pengguna terhadap buku-buku tersebut. Dataset ini sering digunakan dalam tugas sistem rekomendasi karena kompleksitas dan keragaman datanya.
 Link Dataset: [Kaggle - Book Recommendation Dataset](https://www.kaggle.com/datasets/arashnic/book-recommendation-dataset)
 
