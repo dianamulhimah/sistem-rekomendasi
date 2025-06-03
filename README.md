@@ -246,17 +246,15 @@ Rekomendasi Buku untuk Pengguna: `157273`
 * Rentan terhadap *cold-start problem* (untuk user/buku baru).
 * Proses pelatihan model relatif lebih kompleks dan memakan waktu.
 
-* Kedua metode memberikan rekomendasi yang bermanfaat namun dengan keunggulan yang berbeda.
-* Content-Based Filtering efektif untuk data yang minim interaksi user, cocok untuk sistem baru.
-* Collaborative Filtering dengan embedding lebih powerful untuk personalisasi, namun memerlukan data interaksi yang cukup.
+<br/>**Kedua metode memberikan rekomendasi yang bermanfaat namun dengan keunggulan yang berbeda. Content-Based Filtering efektif untuk data yang minim interaksi user, cocok untuk sistem baru. Collaborative Filtering dengan embedding lebih powerful untuk personalisasi, namun memerlukan data interaksi yang cukup.**
 
 ## Evaluation
-1. **Content-Based Filtering**
-###  Metrik Evaluasi: **Precision\@K**
+### 1. **Content-Based Filtering**
+####  Metrik Evaluasi: **Precision\@K**
 **Precision\@K** merupakan metrik evaluasi yang digunakan untuk mengukur seberapa banyak item yang **direkomendasikan oleh sistem** benar-benar **relevan** terhadap preferensi pengguna, dari **K item teratas** yang direkomendasikan.
 Precision\@K adalah metrik yang umum digunakan dalam sistem rekomendasi, terutama ketika tujuan utamanya adalah menyajikan daftar pendek (top-N) rekomendasi yang akurat.
 
-### Rumus Precision\@K
+#### Rumus Precision\@K
 
 $$
 \text{Precision@K} = \frac{\text{Jumlah Rekomendasi yang Relevan}}{K}
@@ -266,61 +264,48 @@ Keterangan:
 * **K** = jumlah item yang direkomendasikan (dalam hal ini **5**).
 * **Relevan** = item yang sesuai dengan preferensi pengguna (berdasarkan judul atau penulis yang mirip dengan buku awal).
 
-### Cara Evaluasi Dilakukan
+#### Cara Evaluasi Dilakukan
 ```python
-# Mendapatkan 5 rekomendasi teratas dari model CBF
+# Top-5 hasil rekomendasi dari fungsi Content-Based
 recommended = book_recommendations('Thomas Robbins')
 
-# Menentukan penulis dan judul yang dianggap relevan dengan Thomas Robbins
+# Daftar penulis atau judul yang dianggap relevan
 relevant_authors = ['Elmore Leonard']
-relevant_titles = ['Bandits', 'Tishomingo Blues', 'Out of Sight']
+relevant_titles = ['Bandits', 'Tishomingo Blues', 'Out of Sight', 'Cuba Libre', 'Gold Coast']
 
-# Menandai buku yang relevan dari hasil rekomendasi
+# Cek relevansi
 recommended['is_relevant'] = recommended.apply(
     lambda x: (x['book_author'] in relevant_authors) or (x['book_title'] in relevant_titles),
     axis=1
 )
 
-# Menghitung jumlah rekomendasi relevan dan precision
+# Hitung Precision@
 total_recs = len(recommended)
 relevant_recs = recommended['is_relevant'].sum()
 precision = relevant_recs / total_recs if total_recs > 0 else 0
+
+print(f"Precision@: {precision:.2f}")
 ```
 
-### Hasil Evaluasi
+#### Hasil Evaluasi
 * **Total rekomendasi (K)**: 5
 * **Jumlah relevan**: 5
 * **Precision\@5**:
 
-  $$
-  \frac{5}{5} = 1.00 \text{ atau } 100\%
-  $$
+  $\frac{5}{5} = 1.00 \text{ atau } 100\%$
 
-### Interpretasi Hasil
+#### Interpretasi Hasil
 Hasil evaluasi menunjukkan bahwa **semua** buku yang direkomendasikan oleh model Content-Based Filtering tergolong relevan terhadap referensi awal (`Thomas Robbins`). Dengan nilai Precision\@5 sebesar **1.00 (100%)**, sistem menunjukkan **kinerja yang sangat baik** dalam mengenali kemiripan konten berdasarkan **judul** dan **penulis buku**.
 
-### Kesesuaian dengan Problem dan Data
+#### Kesesuaian dengan Problem dan Data
 * Problem statement pada proyek ini adalah memberikan **rekomendasi buku yang relevan** berdasarkan informasi konten buku.
 * Precision\@K sangat tepat digunakan karena:
   * **Fokus pada relevansi rekomendasi**, bukan prediksi rating.
   * Cocok untuk kasus **top-N recommendation**, seperti daftar 5 atau 10 buku.
-Penggunaan **Precision\@5** dalam sistem Content-Based Filtering memberikan gambaran yang jelas mengenai **akurasi relevansi rekomendasi** yang dihasilkan. Nilai 100% menunjukkan bahwa pendekatan ini **efektif**, setidaknya untuk kasus pengujian ini.
+<br/>Penggunaan **Precision\@5** dalam sistem Content-Based Filtering memberikan gambaran yang jelas mengenai **akurasi relevansi rekomendasi** yang dihasilkan. Nilai 100% menunjukkan bahwa pendekatan ini **efektif**, setidaknya untuk kasus pengujian ini.
 
-2. **Collaborative Filtering**
+### 2. **Collaborative Filtering**
 **Metrik Evaluasi: Root Mean Squared Error (RMSE)** adalah metrik yang umum digunakan untuk mengukur seberapa jauh nilai prediksi model menyimpang dari nilai aktual (rating sebenarnya). RMSE dihitung dengan rumus:
-
-
-$$
-\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y_i})^2}
-$$
-
-* $y_i$ adalah nilai aktual (ground truth) data ke-$i$
-* $\hat{y_i}$ adalah nilai prediksi model untuk data ke-$i$
-* $n$ adalah jumlah data sampel
-  
-**Grafik berikut menunjukkan perkembangan nilai RMSE selama proses pelatihan model pada tiap epoch:**
-![epoch](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/main/assets/epoch.png)
-
 
 $$
 \text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y_i})^2}
@@ -334,6 +319,9 @@ Keterangan:
 **Interpretasi:**
 * Semakin kecil nilai RMSE, semakin baik akurasi prediksi model.
 * RMSE memiliki satuan yang sama dengan data aslinya, sehingga hasilnya mudah dimaknai.
+
+**Grafik berikut menunjukkan perkembangan nilai RMSE selama proses pelatihan model pada tiap epoch:**
+![epoch](https://raw.githubusercontent.com/dianamulhimah/sistem-rekomendasi/main/assets/epoch.png)
 
 Grafik di atas menunjukkan performa model selama 100 epoch. Terlihat bahwa:
 * RMSE pada **data training** terus menurun (semakin baik).
