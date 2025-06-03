@@ -162,7 +162,7 @@ Berikut adalah penjelasan singkat dan ringkas untuk blok kode tersebut:
 ## Modeling and Result
 Sistem rekomendasi dalam proyek ini dikembangkan menggunakan dua pendekatan utama, yaitu **Content-Based Filtering (CBF)** dan **Collaborative Filtering (CF)**. Tujuan dari model ini adalah untuk membantu pengguna menemukan buku yang sesuai dengan preferensi mereka—baik berdasarkan kemiripan konten maupun perilaku pengguna lain.
 
-**1. Content-Based Filtering (CBF)**
+### **1. Content-Based Filtering (CBF)**
 Content-Based Filtering bekerja dengan cara menghitung kemiripan antar buku berdasarkan informasi kontennya, seperti **judul**. Setelah dilakukan proses representasi data menggunakan TF-IDF di tahap Data Preparation,
 Lalu dihitung **cosine similarity** antar buku berdasarkan representasi vektornya.
 #### Proses Modeling
@@ -193,7 +193,7 @@ Untuk pengguna yang menyukai karya **Thomas Robbins**, sistem merekomendasikan:
 * Rekomendasi cenderung seragam jika kontennya mirip.
 * Tidak bisa menyarankan hal baru di luar preferensi pengguna.
 
-**2. Collaborative Filtering (CF)**
+### **2. Collaborative Filtering (CF)**
 Collaborative Filtering bekerja dengan mendeteksi pola rating yang diberikan pengguna terhadap buku. Sistem mempelajari kesamaan preferensi antar pengguna dan memberikan rekomendasi buku yang disukai oleh pengguna lain yang memiliki preferensi serupa.
 Model yang digunakan adalah neural network sederhana bernama `RecommenderNet`, yang menerapkan teknik **Matrix Factorization** dengan layer embedding. Model dilatih menggunakan optimizer Adam, loss BinaryCrossentropy, dan metrik RootMeanSquaredError (RMSE). Setelah training selesai, model memprediksi skor kecocokan buku yang belum dikunjungi user.
 
@@ -245,8 +245,6 @@ Rekomendasi Buku untuk Pengguna: `157273`
 * Butuh data rating/interaksi yang cukup banyak.
 * Rentan terhadap *cold-start problem* (untuk user/buku baru).
 * Proses pelatihan model relatif lebih kompleks dan memakan waktu.
-
-<br/>**Kedua metode memberikan rekomendasi yang bermanfaat namun dengan keunggulan yang berbeda. Content-Based Filtering efektif untuk data yang minim interaksi user, cocok untuk sistem baru. Collaborative Filtering dengan embedding lebih powerful untuk personalisasi, namun memerlukan data interaksi yang cukup.**
 
 ## Evaluation
 ### 1. **Content-Based Filtering**
@@ -301,7 +299,7 @@ Hasil evaluasi menunjukkan bahwa **semua** buku yang direkomendasikan oleh model
 * Problem statement pada proyek ini adalah memberikan **rekomendasi buku yang relevan** berdasarkan informasi konten buku.
 * Precision\@K sangat tepat digunakan karena:
   * **Fokus pada relevansi rekomendasi**, bukan prediksi rating.
-  * Cocok untuk kasus **top-N recommendation**, seperti daftar 5 atau 10 buku.
+  * Cocok untuk kasus **top-N recommendation**, seperti daftar 5buku.
 * Penggunaan **Precision\@5** dalam sistem Content-Based Filtering memberikan gambaran yang jelas mengenai **akurasi relevansi rekomendasi** yang dihasilkan. Nilai 100% menunjukkan bahwa pendekatan ini **efektif**, setidaknya untuk kasus pengujian ini.
 
 ### 2. **Collaborative Filtering**
